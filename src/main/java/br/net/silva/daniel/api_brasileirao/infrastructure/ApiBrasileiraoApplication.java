@@ -1,4 +1,4 @@
-package br.net.silva.daniel.apibrasileirao;
+package br.net.silva.daniel.api_brasileirao.infrastructure;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
