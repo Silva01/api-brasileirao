@@ -20,25 +20,25 @@ Esta API REST foi desenvolvida para auxiliar a CBF no gerenciamento do Campeonat
 ### Fase 1
 
 1. Times
-- CRUD de times
-- Atributos: Nome, Localidade
+   - CRUD de times
+   - Atributos: Nome, Localidade
 2. Jogadores
-- CRUD de jogadores
-- Atributos: Nome, Data de Nascimento, País, Time
+   - CRUD de jogadores
+   - Atributos: Nome, Data de Nascimento, País, Time
 3. Transferências
-- CRUD de transferências
-- Atributos: Jogador, Time de Origem, Time de Destino, Data, Valor
+   - CRUD de transferências
+   - Atributos: Jogador, Time de Origem, Time de Destino, Data, Valor
 
 ### Fase 2
 
 1. Torneios
-- CRUD de torneios
+   - CRUD de torneios
 2. Times cadastrados em Torneios
-- CRUD de times em torneios
+   - CRUD de times em torneios
 3. Partidas Cadastradas entre Times, em Torneios
-- CRUD de partidas entre times em torneios
+   - CRUD de partidas entre times em torneios
 4. Eventos de Partida
-- Cadastrar eventos que ocorrem em uma partida
+   - Cadastrar eventos que ocorrem em uma partida
 
 ## Instalação e Execução
 
