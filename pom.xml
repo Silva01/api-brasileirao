@@ -10,7 +10,7 @@
     </parent>
     <groupId>br.net.silva.daniel</groupId>
     <artifactId>api-brasileirao</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>api-brasileirao</name>
     <description>api-brasileirao</description>
     <properties>
