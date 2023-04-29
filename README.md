@@ -1,9 +1,9 @@
 # Gerenciamento do Campeonato Brasileiro - API REST
 
 [![Java CI with Maven](https://github.com/Silva01/api-brasileirao/actions/workflows/maven.yml/badge.svg?branch=main)](https://github.com/Silva01/api-brasileirao/actions/workflows/maven.yml)
-[![Maven Version](https://img.shields.io/badge/maven-3.8.1-blue)]
-[![JDK Version](https://img.shields.io/badge/jdk-17-orange)]
-[![License](https://img.shields.io/github/license/silva01/api-brasileirao)]
+[!Maven Version](https://img.shields.io/badge/maven-3.8.1-blue)
+[!JDK Version](https://img.shields.io/badge/jdk-17-orange)
+[!License](https://img.shields.io/github/license/silva01/api-brasileirao)
 
 
 Esta API REST foi desenvolvida para auxiliar a CBF no gerenciamento do Campeonato Brasileiro, incluindo funcionalidades para gerenciar times, jogadores, transferências e torneios.
