@@ -3,6 +3,7 @@ package br.net.silva.daniel.api_brasileirao.domain.tournement.domain;
 import br.net.silva.daniel.api_brasileirao.domain.player.domain.Player;
 import br.net.silva.daniel.api_brasileirao.domain.team.domain.Team;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FootballMatch {
@@ -15,21 +16,21 @@ public class FootballMatch {
     private boolean isStarted;
     private final List<Player> redCardsPlayersList;
     private final List<Player> yellowCardsPlayersList;
+    private final List<Subistitution> subistitutionList;
 
     public FootballMatch(
             Team teamHome,
-            Team teamAway,
-            List<Player> redCardsPlayersList,
-            List<Player> yellowCardsPlayersList) {
+            Team teamAway) {
         this.teamHome = teamHome;
         this.teamAway = teamAway;
+        this.subistitutionList = new ArrayList<>();
         this.goalsHome = 0;
         this.goalsAway = 0;
         this.isFinished = false;
         this.isStartedBreak = false;
         this.isStarted = false;
-        this.redCardsPlayersList = redCardsPlayersList;
-        this.yellowCardsPlayersList = yellowCardsPlayersList;
+        this.redCardsPlayersList = new ArrayList<>();
+        this.yellowCardsPlayersList = new ArrayList<>();
     }
 
     public void goalHome() {
