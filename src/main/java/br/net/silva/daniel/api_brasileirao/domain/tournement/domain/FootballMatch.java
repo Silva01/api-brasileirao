@@ -16,14 +16,14 @@ public class FootballMatch {
     private boolean isStarted;
     private final List<Player> redCardsPlayersList;
     private final List<Player> yellowCardsPlayersList;
-    private final List<Subistitution> subistitutionList;
+    private final List<Substitution> substitutionList;
 
     public FootballMatch(
             Team teamHome,
             Team teamAway) {
         this.teamHome = teamHome;
         this.teamAway = teamAway;
-        this.subistitutionList = new ArrayList<>();
+        this.substitutionList = new ArrayList<>();
         this.goalsHome = 0;
         this.goalsAway = 0;
         this.isFinished = false;
