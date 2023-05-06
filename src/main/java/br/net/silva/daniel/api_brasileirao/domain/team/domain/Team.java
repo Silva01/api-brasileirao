@@ -1,6 +1,7 @@
 package br.net.silva.daniel.api_brasileirao.domain.team.domain;
 
 import br.net.silva.daniel.api_brasileirao.domain.shared.interfaces.Aggregate;
+import br.net.silva.daniel.api_brasileirao.domain.team.dto.TeamDTO;
 
 public class Team implements Aggregate<Team> {
     private final String name;
@@ -21,5 +22,12 @@ public class Team implements Aggregate<Team> {
     @Override
     public Team getAggregate() {
         return this;
+    }
+
+    public TeamDTO toDTO() {
+        TeamDTO dto = new TeamDTO();
+        dto.setName(this.name);
+        dto.setLocalidade(this.localidade);
+        return dto;
     }
 }
