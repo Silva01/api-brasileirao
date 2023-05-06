@@ -2,15 +2,20 @@ package br.net.silva.daniel.api_brasileirao.usecase.team.domain;
 
 import br.net.silva.daniel.api_brasileirao.domain.shared.repository.SaveRepository;
 import br.net.silva.daniel.api_brasileirao.domain.team.domain.Team;
+import br.net.silva.daniel.api_brasileirao.infrastructure.ApiBrasileiraoApplication;
 import br.net.silva.daniel.api_brasileirao.usecase.team.interfaces.UseCase;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest(classes = {SaveTeamUseCase.class, Team.class, SaveRepository.class})
-class SaveTeamUseCaseTestModel {
-    private final SaveRepository<Team> saveRepository;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SpringBootTest(classes = ApiBrasileiraoApplication.class)
+class SaveTeamUseCaseTestModel {
+
+    private SaveRepository<Team> saveRepository;
+
+    @Autowired
     SaveTeamUseCaseTestModel(SaveRepository<Team> saveRepository) {
         this.saveRepository = saveRepository;
     }
