@@ -31,7 +31,6 @@ public class TeamController {
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody final TeamDTO teamDTO) {
         UseCase<Team> createUseCase = new SaveTeamUseCase(saveRepository, new Team(teamDTO.getName(), teamDTO.getLocalidade()));
-
         createUseCase.execute();
     }
 
