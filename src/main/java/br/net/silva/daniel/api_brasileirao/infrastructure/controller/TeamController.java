@@ -1,8 +1,10 @@
 package br.net.silva.daniel.api_brasileirao.infrastructure.controller;
 
+import br.net.silva.daniel.api_brasileirao.domain.shared.repository.FindAllRepository;
 import br.net.silva.daniel.api_brasileirao.domain.shared.repository.SaveRepository;
 import br.net.silva.daniel.api_brasileirao.domain.team.domain.Team;
 import br.net.silva.daniel.api_brasileirao.domain.team.dto.TeamDTO;
+import br.net.silva.daniel.api_brasileirao.usecase.team.domain.FindAllTeamsUseCase;
 import br.net.silva.daniel.api_brasileirao.usecase.team.domain.SaveTeamUseCase;
 import br.net.silva.daniel.api_brasileirao.usecase.team.interfaces.UseCase;
 import org.springframework.http.HttpStatus;
@@ -18,9 +20,11 @@ import java.util.concurrent.Callable;
 public class TeamController {
 
     private final SaveRepository<Team> saveRepository;
+    private final FindAllRepository<Team> findAllRepository;
 
-    public TeamController(SaveRepository<Team> saveRepository) {
+    public TeamController(SaveRepository<Team> saveRepository, FindAllRepository<Team> findAllRepository) {
         this.saveRepository = saveRepository;
+        this.findAllRepository = findAllRepository;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -33,7 +37,8 @@ public class TeamController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Callable<List<TeamDTO>> listAll() {
-        return () -> new ArrayList<>();
+        UseCase<List<Team>> listAllUseCase = new FindAllTeamsUseCase(findAllRepository);
+        return () -> listAllUseCase.execute().stream().map(Team::toDTO).toList();
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
