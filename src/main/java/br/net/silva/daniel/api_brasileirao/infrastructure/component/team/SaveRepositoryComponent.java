@@ -6,7 +6,7 @@ import br.net.silva.daniel.api_brasileirao.infrastructure.service.TeamService;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TeamComponent {
+public class SaveRepositoryComponent {
     public SaveRepository<Team> createSaveRepository(TeamService service) {
         return service;
     }
