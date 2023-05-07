@@ -44,7 +44,7 @@ public class TeamController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Callable<TeamDTO> findById(@PathVariable final Long id) {
-        return () -> new TeamDTO();
+        return TeamDTO::new;
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
