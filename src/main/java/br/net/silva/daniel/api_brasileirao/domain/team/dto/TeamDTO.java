@@ -5,6 +5,8 @@ public class TeamDTO {
     private String name;
     private String localidade;
 
+    private Long id;
+
     public String getName() {
         return name;
     }
@@ -19,5 +21,13 @@ public class TeamDTO {
 
     public void setLocalidade(String localidade) {
         this.localidade = localidade;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

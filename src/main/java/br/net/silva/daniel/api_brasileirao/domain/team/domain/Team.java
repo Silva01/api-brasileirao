@@ -43,6 +43,7 @@ public class Team implements Aggregate<Team> {
         TeamDTO dto = new TeamDTO();
         dto.setName(this.name);
         dto.setLocalidade(this.localidade);
+        dto.setId(this.id);
         return dto;
     }
 }
