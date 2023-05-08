@@ -5,6 +5,7 @@ import br.net.silva.daniel.api_brasileirao.domain.shared.repository.FindByIdRepo
 import br.net.silva.daniel.api_brasileirao.domain.shared.repository.SaveRepository;
 import br.net.silva.daniel.api_brasileirao.domain.team.domain.Team;
 import br.net.silva.daniel.api_brasileirao.domain.team.dto.TeamDTO;
+import br.net.silva.daniel.api_brasileirao.infrastructure.dto.BodyTeamDTO;
 import br.net.silva.daniel.api_brasileirao.usecase.team.domain.FindAllTeamsUseCase;
 import br.net.silva.daniel.api_brasileirao.usecase.team.domain.FindByIdTeamUseCase;
 import br.net.silva.daniel.api_brasileirao.usecase.team.domain.SaveTeamUseCase;
@@ -33,7 +34,7 @@ public class TeamController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody final TeamDTO teamDTO) {
+    public void create(@RequestBody final BodyTeamDTO teamDTO) {
         UseCase<Team> createUseCase = new SaveTeamUseCase(saveRepository, new Team(teamDTO.getName(), teamDTO.getLocalidade()));
         createUseCase.execute();
     }
@@ -54,7 +55,7 @@ public class TeamController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable final Long id) {
+    public void update(@RequestBody BodyTeamDTO body, @PathVariable final Long id) {
 
     }
 
