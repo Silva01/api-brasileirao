@@ -1,8 +1,10 @@
 package br.net.silva.daniel.api_brasileirao.infrastructure.service;
 
 import br.net.silva.daniel.api_brasileirao.domain.shared.repository.FindAllRepository;
+import br.net.silva.daniel.api_brasileirao.domain.shared.repository.FindByIdRepository;
 import br.net.silva.daniel.api_brasileirao.domain.shared.repository.SaveRepository;
 import br.net.silva.daniel.api_brasileirao.domain.team.domain.Team;
+import br.net.silva.daniel.api_brasileirao.domain.team.exception.TeamNotExistsException;
 import br.net.silva.daniel.api_brasileirao.infrastructure.model.TeamModel;
 import br.net.silva.daniel.api_brasileirao.infrastructure.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TeamService implements SaveRepository<Team>, FindAllRepository<Team> {
+public class TeamService implements SaveRepository<Team>, FindAllRepository<Team>, FindByIdRepository<Team> {
 
     private TeamRepository repository;
 
@@ -25,12 +27,18 @@ public class TeamService implements SaveRepository<Team>, FindAllRepository<Team
         TeamModel model = new TeamModel();
         model.setName(aggregate.getName());
         model.setLocalidade(aggregate.getLocalidade());
-        repository.save(model);
+        TeamModel response = repository.save(model);
+        aggregate.addId(response.getId());
         return aggregate;
     }
 
     @Override
     public List<Team> findAll() {
-        return repository.findAll().stream().map(teamModel -> new Team(teamModel.getName(), teamModel.getLocalidade())).toList();
+        return repository.findAll().stream().map(teamModel -> new Team(teamModel.getName(), teamModel.getLocalidade(), teamModel.getId())).toList();
+    }
+
+    @Override
+    public Team findById(Long id) throws TeamNotExistsException {
+        return repository.findById(id).map(teamModel -> new Team(teamModel.getName(), teamModel.getLocalidade(), teamModel.getId())).orElseThrow(TeamNotExistsException::new);
     }
 }
