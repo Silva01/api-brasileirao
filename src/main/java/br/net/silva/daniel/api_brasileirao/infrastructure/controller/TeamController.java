@@ -1,17 +1,18 @@
 package br.net.silva.daniel.api_brasileirao.infrastructure.controller;
 
 import br.net.silva.daniel.api_brasileirao.domain.shared.repository.FindAllRepository;
+import br.net.silva.daniel.api_brasileirao.domain.shared.repository.FindByIdRepository;
 import br.net.silva.daniel.api_brasileirao.domain.shared.repository.SaveRepository;
 import br.net.silva.daniel.api_brasileirao.domain.team.domain.Team;
 import br.net.silva.daniel.api_brasileirao.domain.team.dto.TeamDTO;
 import br.net.silva.daniel.api_brasileirao.usecase.team.domain.FindAllTeamsUseCase;
+import br.net.silva.daniel.api_brasileirao.usecase.team.domain.FindByIdTeamUseCase;
 import br.net.silva.daniel.api_brasileirao.usecase.team.domain.SaveTeamUseCase;
 import br.net.silva.daniel.api_brasileirao.usecase.team.interfaces.UseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -22,9 +23,12 @@ public class TeamController {
     private final SaveRepository<Team> saveRepository;
     private final FindAllRepository<Team> findAllRepository;
 
-    public TeamController(SaveRepository<Team> saveRepository, FindAllRepository<Team> findAllRepository) {
+    private final FindByIdRepository<Team> findByIdRepository;
+
+    public TeamController(SaveRepository<Team> saveRepository, FindAllRepository<Team> findAllRepository, FindByIdRepository<Team> findByIdRepository) {
         this.saveRepository = saveRepository;
         this.findAllRepository = findAllRepository;
+        this.findByIdRepository = findByIdRepository;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -44,7 +48,8 @@ public class TeamController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Callable<TeamDTO> findById(@PathVariable final Long id) {
-        return TeamDTO::new;
+        UseCase<Team> findByIdTeamUseCase = new FindByIdTeamUseCase(id, findByIdRepository);
+        return () -> findByIdTeamUseCase.execute().toDTO();
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
