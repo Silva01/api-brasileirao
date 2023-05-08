@@ -46,7 +46,7 @@ public class TeamService implements SaveRepository<Team>, FindAllRepository<Team
 
     @Override
     public Team update(Team aggregate) {
-        TeamModel model = repository.getById(aggregate.getId());
+        TeamModel model = repository.findById(aggregate.getId()).orElseThrow(TeamNotExistsException::new);
         model.setName(Objects.nonNull(aggregate.getName()) ? aggregate.getName() : model.getName());
         model.setLocalidade(Objects.nonNull(aggregate.getLocalidade()) ? aggregate.getLocalidade() : model.getLocalidade());
         TeamModel response = repository.save(model);
