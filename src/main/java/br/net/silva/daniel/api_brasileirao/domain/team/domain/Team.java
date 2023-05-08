@@ -6,10 +6,17 @@ import br.net.silva.daniel.api_brasileirao.domain.team.dto.TeamDTO;
 public class Team implements Aggregate<Team> {
     private final String name;
     private final String localidade;
+    private Long id;
 
     public Team(final String name, final String localidade) {
         this.name = name;
         this.localidade = localidade;
+    }
+
+    public Team(final String name, final String localidade, final Long id) {
+        this.name = name;
+        this.localidade = localidade;
+        this.id = id;
     }
 
     public String getName() {
@@ -18,6 +25,14 @@ public class Team implements Aggregate<Team> {
 
     public String getLocalidade() {
         return localidade;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void addId(Long id) {
+        this.id = id;
     }
     @Override
     public Team getAggregate() {
