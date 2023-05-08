@@ -26,14 +26,15 @@ class FindByIdTeamUseCaseTest {
     @Test
     void deve_retornar_um_time() {
         UseCase<Team> saveTeamUseCase = new SaveTeamUseCase(saveRepository, new Team("Flamengo", "RJ"));
-        UseCase<Team> findByIdTeamUseCase = new FindByIdTeamUseCase(saveTeamUseCase.execute().getAggregate().getId(), findByIdRepository);
+        Team saveResponse = saveTeamUseCase.execute();
+        UseCase<Team> findByIdTeamUseCase = new FindByIdTeamUseCase(saveResponse.getAggregate().getId(), findByIdRepository);
 
         Team response = findByIdTeamUseCase.execute();
 
         assertNotNull(response);
 
-        assertEquals(1, response.getAggregate().getId());
-        assertEquals(response.getAggregate().getName(), "Flamengo");
-        assertEquals(response.getAggregate().getLocalidade(), "RJ");
+        assertEquals(saveResponse.getId(), response.getId());
+        assertEquals(response.getName(), "Flamengo");
+        assertEquals(response.getLocalidade(), "RJ");
     }
 }
