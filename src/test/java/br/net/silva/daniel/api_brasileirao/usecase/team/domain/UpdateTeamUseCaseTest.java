@@ -8,6 +8,7 @@ import br.net.silva.daniel.api_brasileirao.infrastructure.ApiBrasileiraoApplicat
 import br.net.silva.daniel.api_brasileirao.usecase.team.interfaces.UseCase;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(classes = ApiBrasileiraoApplication.class)
@@ -17,6 +18,7 @@ class UpdateTeamUseCaseTest {
     private final UpdateRespository<Team> updateRepository;
     private final FindByIdRepository<Team> findByIdRepository;
 
+    @Autowired
     UpdateTeamUseCaseTest(SaveRepository<Team> saveRepository, UpdateRespository<Team> updateRepository, FindByIdRepository<Team> findByIdRepository) {
         this.saveRepository = saveRepository;
         this.updateRepository = updateRepository;
