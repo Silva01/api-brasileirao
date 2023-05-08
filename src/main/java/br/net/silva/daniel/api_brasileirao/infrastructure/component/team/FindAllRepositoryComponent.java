@@ -5,8 +5,6 @@ import br.net.silva.daniel.api_brasileirao.domain.team.domain.Team;
 import br.net.silva.daniel.api_brasileirao.infrastructure.service.TeamService;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 public class FindAllRepositoryComponent {
 
