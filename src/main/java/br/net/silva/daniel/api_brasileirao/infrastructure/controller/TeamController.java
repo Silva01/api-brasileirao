@@ -23,7 +23,6 @@ public class TeamController {
 
     private final SaveRepository<Team> saveRepository;
     private final FindAllRepository<Team> findAllRepository;
-
     private final FindByIdRepository<Team> findByIdRepository;
 
     public TeamController(SaveRepository<Team> saveRepository, FindAllRepository<Team> findAllRepository, FindByIdRepository<Team> findByIdRepository) {
