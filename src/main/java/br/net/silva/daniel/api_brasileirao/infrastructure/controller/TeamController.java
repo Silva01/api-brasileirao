@@ -1,16 +1,10 @@
 package br.net.silva.daniel.api_brasileirao.infrastructure.controller;
 
-import br.net.silva.daniel.api_brasileirao.domain.shared.repository.FindAllRepository;
-import br.net.silva.daniel.api_brasileirao.domain.shared.repository.FindByIdRepository;
-import br.net.silva.daniel.api_brasileirao.domain.shared.repository.SaveRepository;
-import br.net.silva.daniel.api_brasileirao.domain.shared.repository.UpdateRespository;
+import br.net.silva.daniel.api_brasileirao.domain.shared.repository.*;
 import br.net.silva.daniel.api_brasileirao.domain.team.domain.Team;
 import br.net.silva.daniel.api_brasileirao.domain.team.dto.TeamDTO;
 import br.net.silva.daniel.api_brasileirao.infrastructure.dto.BodyTeamDTO;
-import br.net.silva.daniel.api_brasileirao.usecase.team.domain.FindAllTeamsUseCase;
-import br.net.silva.daniel.api_brasileirao.usecase.team.domain.FindByIdTeamUseCase;
-import br.net.silva.daniel.api_brasileirao.usecase.team.domain.SaveTeamUseCase;
-import br.net.silva.daniel.api_brasileirao.usecase.team.domain.UpdateTeamUseCase;
+import br.net.silva.daniel.api_brasileirao.usecase.team.domain.*;
 import br.net.silva.daniel.api_brasileirao.usecase.team.interfaces.UseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,12 +21,14 @@ public class TeamController {
     private final FindAllRepository<Team> findAllRepository;
     private final FindByIdRepository<Team> findByIdRepository;
     private final UpdateRespository<Team> updateRespository;
+    private final DeleteRepository<Team> deleteRepository;
 
-    public TeamController(SaveRepository<Team> saveRepository, FindAllRepository<Team> findAllRepository, FindByIdRepository<Team> findByIdRepository, UpdateRespository<Team> updateRespository) {
+    public TeamController(SaveRepository<Team> saveRepository, FindAllRepository<Team> findAllRepository, FindByIdRepository<Team> findByIdRepository, UpdateRespository<Team> updateRespository, DeleteRepository<Team> deleteRepository) {
         this.saveRepository = saveRepository;
         this.findAllRepository = findAllRepository;
         this.findByIdRepository = findByIdRepository;
         this.updateRespository = updateRespository;
+        this.deleteRepository = deleteRepository;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -66,7 +62,8 @@ public class TeamController {
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable final Long id) {
-
+        UseCase<Void> deleteTeamUseCase = new DeleteTeamUseCase(id, deleteRepository);
+        deleteTeamUseCase.execute();
     }
 
 }
