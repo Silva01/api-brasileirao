@@ -5,7 +5,7 @@ import br.net.silva.daniel.api_brasileirao.domain.team.domain.Team;
 import br.net.silva.daniel.api_brasileirao.domain.team.dto.TeamDTO;
 import br.net.silva.daniel.api_brasileirao.infrastructure.dto.BodyTeamDTO;
 import br.net.silva.daniel.api_brasileirao.usecase.team.domain.*;
-import br.net.silva.daniel.api_brasileirao.usecase.team.interfaces.UseCase;
+import br.net.silva.daniel.api_brasileirao.usecase.shared.interfaces.UseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
