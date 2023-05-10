@@ -1,10 +1,11 @@
 package br.net.silva.daniel.api_brasileirao.domain.player.domain;
 
+import br.net.silva.daniel.api_brasileirao.domain.shared.interfaces.Aggregate;
 import br.net.silva.daniel.api_brasileirao.domain.team.domain.Team;
 
 import java.time.LocalDate;
 
-public class Player {
+public class Player implements Aggregate<Player> {
 
     private final String name;
     private final LocalDate birthDate;
@@ -16,5 +17,10 @@ public class Player {
         this.birthDate = birthDate;
         this.country = country;
         this.team = team;
+    }
+
+    @Override
+    public Player getAggregate() {
+        return this;
     }
 }
