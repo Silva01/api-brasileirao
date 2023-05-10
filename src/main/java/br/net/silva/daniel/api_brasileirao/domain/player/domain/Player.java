@@ -1,7 +1,6 @@
 package br.net.silva.daniel.api_brasileirao.domain.player.domain;
 
 import br.net.silva.daniel.api_brasileirao.domain.shared.interfaces.Aggregate;
-import br.net.silva.daniel.api_brasileirao.domain.team.domain.Team;
 
 import java.time.LocalDate;
 
@@ -10,13 +9,13 @@ public class Player implements Aggregate<Player> {
     private final String name;
     private final LocalDate birthDate;
     private final String country;
-    private final Team team;
+    private final Long teamId;
 
-    public Player(String name, LocalDate birthDate, String country, Team team) {
+    public Player(String name, LocalDate birthDate, String country, Long teamId) {
         this.name = name;
         this.birthDate = birthDate;
         this.country = country;
-        this.team = team;
+        this.teamId = teamId;
     }
 
     public String getName() {
@@ -31,8 +30,8 @@ public class Player implements Aggregate<Player> {
         return country;
     }
 
-    public Team getTeam() {
-        return team;
+    public Long getTeamId() {
+        return teamId;
     }
 
     @Override
