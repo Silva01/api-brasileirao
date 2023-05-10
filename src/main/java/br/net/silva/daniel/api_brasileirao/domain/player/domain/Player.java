@@ -19,6 +19,22 @@ public class Player implements Aggregate<Player> {
         this.team = team;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
     @Override
     public Player getAggregate() {
         return this;
