@@ -10,6 +10,17 @@ public class PlayerDTO {
     private String country;
     private Long teamId;
 
+    public PlayerDTO() {
+    }
+
+    public PlayerDTO(String name, LocalDate birthDate, String country, Long teamId, Long id) {
+        this.id = id;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.country = country;
+        this.teamId = teamId;
+    }
+
     public String getName() {
         return name;
     }
