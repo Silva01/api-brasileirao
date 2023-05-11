@@ -6,16 +6,18 @@ import java.time.LocalDate;
 
 public class Player implements Aggregate<Player> {
 
+    private Long id;
     private final String name;
     private final LocalDate birthDate;
     private final String country;
     private final Long teamId;
 
-    public Player(String name, LocalDate birthDate, String country, Long teamId) {
+    public Player(String name, LocalDate birthDate, String country, Long teamId, Long id) {
         this.name = name;
         this.birthDate = birthDate;
         this.country = country;
         this.teamId = teamId;
+        this.id = id;
     }
 
     public String getName() {
@@ -32,6 +34,10 @@ public class Player implements Aggregate<Player> {
 
     public Long getTeamId() {
         return teamId;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     @Override
