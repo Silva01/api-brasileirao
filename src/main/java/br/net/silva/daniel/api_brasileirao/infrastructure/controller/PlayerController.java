@@ -2,10 +2,10 @@ package br.net.silva.daniel.api_brasileirao.infrastructure.controller;
 
 import br.net.silva.daniel.api_brasileirao.domain.player.domain.Player;
 import br.net.silva.daniel.api_brasileirao.domain.player.dto.PlayerDTO;
-import br.net.silva.daniel.api_brasileirao.domain.shared.repository.FindByIdRepository;
+import br.net.silva.daniel.api_brasileirao.domain.shared.repository.FindAllRepository;
 import br.net.silva.daniel.api_brasileirao.domain.shared.repository.SaveRepository;
-import br.net.silva.daniel.api_brasileirao.domain.team.domain.Team;
 import br.net.silva.daniel.api_brasileirao.infrastructure.dto.BodyPlayerDTO;
+import br.net.silva.daniel.api_brasileirao.usecase.player.domain.FindAllPlayerUseCase;
 import br.net.silva.daniel.api_brasileirao.usecase.player.domain.SavePlayerUseCase;
 import br.net.silva.daniel.api_brasileirao.usecase.shared.interfaces.UseCase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +23,18 @@ import java.util.concurrent.Callable;
 public final class PlayerController {
 
     private final SaveRepository<Player> saveRepository;
+    private final FindAllRepository<Player> findAllRepository;
 
     @Autowired
-    public PlayerController(SaveRepository<Player> saveRepository) {
+    public PlayerController(SaveRepository<Player> saveRepository, FindAllRepository<Player> findAllRepository) {
         this.saveRepository = saveRepository;
+        this.findAllRepository = findAllRepository;
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(code = HttpStatus.CREATED)
     public void create(@RequestBody BodyPlayerDTO body) {
-        UseCase<Player> createANewPlayerUseCase = new SavePlayerUseCase(saveRepository, new Player(body.getName(), body.getBirthDate(), body.getCountry(), body.getTeamId()));
+        UseCase<Player> createANewPlayerUseCase = new SavePlayerUseCase(saveRepository, new Player(body.getName(), body.getBirthDate(), body.getCountry(), body.getTeamId(), null));
         createANewPlayerUseCase.execute();
     }
 
@@ -58,11 +60,10 @@ public final class PlayerController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(code = HttpStatus.OK)
     public Callable<List<PlayerDTO>> findAll() {
-        PlayerDTO p = new PlayerDTO();
-        p.setName("Daniel");
-        p.setTeamId(1L);
-        p.setCountry("Brasil");
-        p.setBirthDate(LocalDate.of(1995, 10, 10));
-        return () -> Collections.singletonList(p);
+        UseCase<List<Player>> findAllPlayersUseCase = new FindAllPlayerUseCase(findAllRepository);
+        return () -> findAllPlayersUseCase.execute()
+                .stream()
+                .map(player -> new PlayerDTO(player.getName(), player.getBirthDate(), player.getCountry(), player.getTeamId(), player.getTeamId()))
+                .toList();
     }
 }
