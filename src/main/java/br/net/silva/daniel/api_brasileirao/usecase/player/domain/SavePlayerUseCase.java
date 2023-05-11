@@ -8,16 +8,16 @@ import br.net.silva.daniel.api_brasileirao.usecase.shared.interfaces.UseCase;
 public class SavePlayerUseCase implements UseCase<Player> {
 
     private final SaveRepository<Player> repository;
-    private final Aggregate<Player> team;
+    private final Aggregate<Player> player;
 
-    public SavePlayerUseCase(SaveRepository<Player> repository, Aggregate<Player> team) {
+    public SavePlayerUseCase(SaveRepository<Player> repository, Aggregate<Player> player) {
         this.repository = repository;
-        this.team = team;
+        this.player = player;
     }
 
 
     @Override
     public Player execute() {
-        return repository.save(team.getAggregate());
+        return repository.save(player.getAggregate());
     }
 }
