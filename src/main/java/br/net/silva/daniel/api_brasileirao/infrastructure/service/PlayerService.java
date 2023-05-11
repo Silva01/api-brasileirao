@@ -22,7 +22,7 @@ public final class PlayerService implements SaveRepository<Player> {
         playerModel.setName(aggregate.getName());
         playerModel.setBirthDate(aggregate.getBirthDate());
         playerModel.setCountry(aggregate.getCountry());
-        playerModel.setTeam(aggregate.getTeam().getId());
+        playerModel.setTeam(aggregate.getTeamId());
         playerRepository.save(playerModel);
         return aggregate;
     }
