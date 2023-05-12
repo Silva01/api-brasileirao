@@ -2,15 +2,9 @@ package br.net.silva.daniel.api_brasileirao.infrastructure.controller;
 
 import br.net.silva.daniel.api_brasileirao.domain.player.domain.Player;
 import br.net.silva.daniel.api_brasileirao.domain.player.dto.PlayerDTO;
-import br.net.silva.daniel.api_brasileirao.domain.shared.repository.FindAllRepository;
-import br.net.silva.daniel.api_brasileirao.domain.shared.repository.FindByIdRepository;
-import br.net.silva.daniel.api_brasileirao.domain.shared.repository.SaveRepository;
-import br.net.silva.daniel.api_brasileirao.domain.shared.repository.UpdateRespository;
+import br.net.silva.daniel.api_brasileirao.domain.shared.repository.*;
 import br.net.silva.daniel.api_brasileirao.infrastructure.dto.BodyPlayerDTO;
-import br.net.silva.daniel.api_brasileirao.usecase.player.domain.FindAllPlayerUseCase;
-import br.net.silva.daniel.api_brasileirao.usecase.player.domain.FindByIdPlayerUseCase;
-import br.net.silva.daniel.api_brasileirao.usecase.player.domain.SavePlayerUseCase;
-import br.net.silva.daniel.api_brasileirao.usecase.player.domain.UpdatePlayerUseCase;
+import br.net.silva.daniel.api_brasileirao.usecase.player.domain.*;
 import br.net.silva.daniel.api_brasileirao.usecase.shared.interfaces.UseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,13 +22,15 @@ public final class PlayerController {
     private final FindAllRepository<Player> findAllRepository;
     private final UpdateRespository<Player> updateRespository;
     private final FindByIdRepository<Player> findByIdRepository;
+    private final DeleteRepository<Player> deleteRepository;
 
     @Autowired
-    public PlayerController(SaveRepository<Player> saveRepository, FindAllRepository<Player> findAllRepository, UpdateRespository<Player> updateRespository, FindByIdRepository<Player> findByIdRepository) {
+    public PlayerController(SaveRepository<Player> saveRepository, FindAllRepository<Player> findAllRepository, UpdateRespository<Player> updateRespository, FindByIdRepository<Player> findByIdRepository, DeleteRepository<Player> deleteRepository) {
         this.saveRepository = saveRepository;
         this.findAllRepository = findAllRepository;
         this.updateRespository = updateRespository;
         this.findByIdRepository = findByIdRepository;
+        this.deleteRepository = deleteRepository;
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -54,7 +50,8 @@ public final class PlayerController {
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") Long id) {
-
+        UseCase<Void> deletePlayerUseCase = new DeletePlayerUseCase(id, deleteRepository);
+        deletePlayerUseCase.execute();
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
