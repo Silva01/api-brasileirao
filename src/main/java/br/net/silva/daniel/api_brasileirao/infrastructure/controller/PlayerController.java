@@ -4,17 +4,17 @@ import br.net.silva.daniel.api_brasileirao.domain.player.domain.Player;
 import br.net.silva.daniel.api_brasileirao.domain.player.dto.PlayerDTO;
 import br.net.silva.daniel.api_brasileirao.domain.shared.repository.FindAllRepository;
 import br.net.silva.daniel.api_brasileirao.domain.shared.repository.SaveRepository;
+import br.net.silva.daniel.api_brasileirao.domain.shared.repository.UpdateRespository;
 import br.net.silva.daniel.api_brasileirao.infrastructure.dto.BodyPlayerDTO;
 import br.net.silva.daniel.api_brasileirao.usecase.player.domain.FindAllPlayerUseCase;
 import br.net.silva.daniel.api_brasileirao.usecase.player.domain.SavePlayerUseCase;
+import br.net.silva.daniel.api_brasileirao.usecase.player.domain.UpdatePlayerUseCase;
 import br.net.silva.daniel.api_brasileirao.usecase.shared.interfaces.UseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -24,11 +24,13 @@ public final class PlayerController {
 
     private final SaveRepository<Player> saveRepository;
     private final FindAllRepository<Player> findAllRepository;
+    private final UpdateRespository<Player> updateRespository;
 
     @Autowired
-    public PlayerController(SaveRepository<Player> saveRepository, FindAllRepository<Player> findAllRepository) {
+    public PlayerController(SaveRepository<Player> saveRepository, FindAllRepository<Player> findAllRepository, UpdateRespository<Player> updateRespository) {
         this.saveRepository = saveRepository;
         this.findAllRepository = findAllRepository;
+        this.updateRespository = updateRespository;
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -41,8 +43,8 @@ public final class PlayerController {
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void update(@PathVariable("id") Long id, @RequestBody BodyPlayerDTO body) {
-
-
+        UseCase<Player> updatePlayerUseCase = new UpdatePlayerUseCase(updateRespository, new Player(body.getName(), body.getBirthDate(), body.getCountry(), body.getTeamId(), id));
+        updatePlayerUseCase.execute();
     }
 
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -63,7 +65,7 @@ public final class PlayerController {
         UseCase<List<Player>> findAllPlayersUseCase = new FindAllPlayerUseCase(findAllRepository);
         return () -> findAllPlayersUseCase.execute()
                 .stream()
-                .map(player -> new PlayerDTO(player.getName(), player.getBirthDate(), player.getCountry(), player.getTeamId(), player.getTeamId()))
+                .map(player -> new PlayerDTO(player.getName(), player.getBirthDate(), player.getCountry(), player.getTeamId(), player.getId()))
                 .toList();
     }
 }
