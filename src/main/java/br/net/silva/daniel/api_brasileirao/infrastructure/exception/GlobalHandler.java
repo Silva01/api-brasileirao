@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalHandler {
 
     @ExceptionHandler(value = PlayerNotExistsException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Player not found")
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public BodyErrorDTO playerNotExistsException() {
         return new BodyErrorDTO(HttpStatus.NOT_FOUND.value(), "Player not found");
     }
