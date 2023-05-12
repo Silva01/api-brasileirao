@@ -9,12 +9,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.time.LocalDate;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(classes = {ApiBrasileiraoApplication.class, PlayerController.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc(printOnlyOnFailure = false)
@@ -133,7 +133,8 @@ class PlayerControllerTest {
         mvcResult.getAsyncResult();
 
         mockMvc.perform(asyncDispatch(mvcResult))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(""));
     }
 
     @Test
@@ -155,10 +156,7 @@ class PlayerControllerTest {
 
         mockMvc.perform(asyncDispatch(mvcResult))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name").value("Daniel"))
-                .andExpect(jsonPath("$[0].teamId").value(1L))
-                .andExpect(jsonPath("$[0].country").value("Brasil"))
-                .andExpect(jsonPath("$[0].birthDate").value("1995-10-10"));
+                .andExpect(content().string("{\"id\":1,\"name\":\"Daniel\",\"birthDate\":\"1995-10-10\",\"country\":\"Brasil\",\"teamId\":1}"));
     }
 
     @Test
