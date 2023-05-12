@@ -3,8 +3,10 @@ package br.net.silva.daniel.api_brasileirao.infrastructure.service;
 import br.net.silva.daniel.api_brasileirao.domain.player.domain.Player;
 import br.net.silva.daniel.api_brasileirao.domain.player.exception.PlayerNotExistsException;
 import br.net.silva.daniel.api_brasileirao.domain.shared.repository.FindAllRepository;
+import br.net.silva.daniel.api_brasileirao.domain.shared.repository.FindByIdRepository;
 import br.net.silva.daniel.api_brasileirao.domain.shared.repository.SaveRepository;
 import br.net.silva.daniel.api_brasileirao.domain.shared.repository.UpdateRespository;
+import br.net.silva.daniel.api_brasileirao.domain.team.exception.TeamNotExistsException;
 import br.net.silva.daniel.api_brasileirao.infrastructure.model.PlayerModel;
 import br.net.silva.daniel.api_brasileirao.infrastructure.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public final class PlayerService implements SaveRepository<Player>, FindAllRepository<Player>, UpdateRespository<Player> {
+public final class PlayerService implements SaveRepository<Player>, FindAllRepository<Player>, UpdateRespository<Player>, FindByIdRepository<Player> {
 
     private final PlayerRepository playerRepository;
     @Autowired
@@ -51,5 +53,13 @@ public final class PlayerService implements SaveRepository<Player>, FindAllRepos
         playerModel.setTeamId(Objects.nonNull(aggregate.getTeamId()) ? aggregate.getTeamId() : playerModel.getTeamId());
         playerRepository.save(playerModel);
         return aggregate;
+    }
+
+    @Override
+    public Player findById(Long id) throws TeamNotExistsException {
+        return playerRepository
+                .findById(id)
+                .map(playerModel -> new Player(playerModel.getName(), playerModel.getBirthDate(), playerModel.getCountry(), playerModel.getTeamId(), playerModel.getId()))
+                .orElseThrow(PlayerNotExistsException::new);
     }
 }
