@@ -52,7 +52,50 @@ class PlayerControllerTest {
     }
 
     @Test
-    void update() {
+    void update() throws Exception {
+        BodyPlayerDTO bodyPlayerDTO = new BodyPlayerDTO();
+        bodyPlayerDTO.setName("Daniel");
+        bodyPlayerDTO.setTeamId(1L);
+        bodyPlayerDTO.setCountry("Brasil");
+        bodyPlayerDTO.setBirthDate(LocalDate.of(1995, 10, 10));
+
+        mockMvc.perform(post("/player")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(bodyPlayerDTO)))
+                .andExpect(status().isCreated());
+
+        MvcResult mvcResult = mockMvc.perform(get("/player").contentType("application/json")).andReturn();
+
+        mvcResult.getAsyncResult();
+
+        mockMvc.perform(asyncDispatch(mvcResult))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value("Daniel"))
+                .andExpect(jsonPath("$[0].teamId").value(1L))
+                .andExpect(jsonPath("$[0].country").value("Brasil"))
+                .andExpect(jsonPath("$[0].birthDate").value("1995-10-10"));
+
+
+        bodyPlayerDTO.setName("Daniel Silva");
+        bodyPlayerDTO.setTeamId(1L);
+        bodyPlayerDTO.setCountry("Germany");
+        bodyPlayerDTO.setBirthDate(LocalDate.of(1995, 10, 10));
+
+        mockMvc.perform(put("/player/1")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(bodyPlayerDTO)))
+                .andExpect(status().isNoContent());
+
+        MvcResult mvcResult2 = mockMvc.perform(get("/player").contentType("application/json")).andReturn();
+
+        mvcResult2.getAsyncResult();
+
+        mockMvc.perform(asyncDispatch(mvcResult2))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value("Daniel Silva"))
+                .andExpect(jsonPath("$[0].teamId").value(1L))
+                .andExpect(jsonPath("$[0].country").value("Germany"))
+                .andExpect(jsonPath("$[0].birthDate").value("1995-10-10"));
     }
 
     @Test
