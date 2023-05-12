@@ -99,14 +99,90 @@ class PlayerControllerTest {
     }
 
     @Test
-    void delete() {
+    void delete_request() throws Exception {
+        BodyPlayerDTO bodyPlayerDTO = new BodyPlayerDTO();
+        bodyPlayerDTO.setName("Daniel");
+        bodyPlayerDTO.setTeamId(1L);
+        bodyPlayerDTO.setCountry("Brasil");
+        bodyPlayerDTO.setBirthDate(LocalDate.of(1995, 10, 10));
+
+        mockMvc.perform(post("/player")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(bodyPlayerDTO)))
+                .andExpect(status().isCreated());
+
+
+        MvcResult mvcResult1 = mockMvc.perform(get("/player/1").contentType("application/json")).andReturn();
+
+        mvcResult1.getAsyncResult();
+
+        mockMvc.perform(asyncDispatch(mvcResult1))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value("Daniel"))
+                .andExpect(jsonPath("$[0].teamId").value(1L))
+                .andExpect(jsonPath("$[0].country").value("Brasil"))
+                .andExpect(jsonPath("$[0].birthDate").value("1995-10-10"));
+
+
+        mockMvc.perform(delete("/player/1").contentType("application/json"))
+                .andExpect(status().isNoContent());
+
+
+        MvcResult mvcResult = mockMvc.perform(get("/player/1").contentType("application/json")).andReturn();
+
+        mvcResult.getAsyncResult();
+
+        mockMvc.perform(asyncDispatch(mvcResult))
+                .andExpect(status().isNotFound());
     }
 
     @Test
-    void findById() {
+    void findById() throws Exception {
+        BodyPlayerDTO bodyPlayerDTO = new BodyPlayerDTO();
+        bodyPlayerDTO.setName("Daniel");
+        bodyPlayerDTO.setTeamId(1L);
+        bodyPlayerDTO.setCountry("Brasil");
+        bodyPlayerDTO.setBirthDate(LocalDate.of(1995, 10, 10));
+
+        mockMvc.perform(post("/player")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(bodyPlayerDTO)))
+                .andExpect(status().isCreated());
+
+        MvcResult mvcResult = mockMvc.perform(get("/player/1").contentType("application/json")).andReturn();
+
+        mvcResult.getAsyncResult();
+
+        mockMvc.perform(asyncDispatch(mvcResult))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value("Daniel"))
+                .andExpect(jsonPath("$[0].teamId").value(1L))
+                .andExpect(jsonPath("$[0].country").value("Brasil"))
+                .andExpect(jsonPath("$[0].birthDate").value("1995-10-10"));
     }
 
     @Test
-    void findAll() {
+    void findAll() throws Exception {
+        BodyPlayerDTO bodyPlayerDTO = new BodyPlayerDTO();
+        bodyPlayerDTO.setName("Daniel");
+        bodyPlayerDTO.setTeamId(1L);
+        bodyPlayerDTO.setCountry("Brasil");
+        bodyPlayerDTO.setBirthDate(LocalDate.of(1995, 10, 10));
+
+        mockMvc.perform(post("/player")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(bodyPlayerDTO)))
+                .andExpect(status().isCreated());
+
+        MvcResult mvcResult = mockMvc.perform(get("/player").contentType("application/json")).andReturn();
+
+        mvcResult.getAsyncResult();
+
+        mockMvc.perform(asyncDispatch(mvcResult))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value("Daniel"))
+                .andExpect(jsonPath("$[0].teamId").value(1L))
+                .andExpect(jsonPath("$[0].country").value("Brasil"))
+                .andExpect(jsonPath("$[0].birthDate").value("1995-10-10"));
     }
 }
