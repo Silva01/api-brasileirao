@@ -8,6 +8,7 @@ public class BodyPlayerDTO {
     private LocalDate birthDate;
     private String country;
     private Long teamId;
+    private long id;
 
     public String getName() {
         return name;
@@ -39,5 +40,13 @@ public class BodyPlayerDTO {
 
     public void setTeamId(Long teamId) {
         this.teamId = teamId;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
