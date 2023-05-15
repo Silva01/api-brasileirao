@@ -35,7 +35,7 @@ class FindAllTeamsUseCaseTest {
         List<Team> response = findAllTeamsUseCase.execute();
 
         assertTrue(response.size() >= 1);
-        assertEquals(response.get(0).getAggregate().getName(), "Flamengo");
-        assertEquals(response.get(0).getAggregate().getLocalidade(), "RJ");
+        assertEquals(response.get(response.size() - 1).getAggregate().getName(), "Flamengo");
+        assertEquals(response.get(response.size() - 1).getAggregate().getLocalidade(), "RJ");
     }
 }
