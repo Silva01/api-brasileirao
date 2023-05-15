@@ -4,7 +4,7 @@ import br.net.silva.daniel.api_brasileirao.domain.shared.repository.FindByIdRepo
 import br.net.silva.daniel.api_brasileirao.domain.shared.repository.SaveRepository;
 import br.net.silva.daniel.api_brasileirao.domain.team.domain.Team;
 import br.net.silva.daniel.api_brasileirao.infrastructure.ApiBrasileiraoApplication;
-import br.net.silva.daniel.api_brasileirao.usecase.team.interfaces.UseCase;
+import br.net.silva.daniel.api_brasileirao.usecase.shared.interfaces.UseCase;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;

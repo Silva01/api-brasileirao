@@ -3,7 +3,7 @@ package br.net.silva.daniel.api_brasileirao.usecase.team.domain;
 import br.net.silva.daniel.api_brasileirao.domain.shared.repository.FindByIdRepository;
 import br.net.silva.daniel.api_brasileirao.domain.team.domain.Team;
 import br.net.silva.daniel.api_brasileirao.domain.team.exception.TeamNotExistsException;
-import br.net.silva.daniel.api_brasileirao.usecase.team.interfaces.UseCase;
+import br.net.silva.daniel.api_brasileirao.usecase.shared.interfaces.UseCase;
 
 public class FindByIdTeamUseCase implements UseCase<Team> {
 
